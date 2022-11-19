@@ -8,7 +8,6 @@
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
 
-//#define int int64_t
 
 using namespace std;
 using ll = int64_t;
