@@ -3,7 +3,7 @@
 #pragma GCC target("avx2,avx,sse,sse2,\
 sse3,ssse3,sse4,sse4.1,sse4.2,\
 lzcnt,popcnt,abm,bmi,bmi2")
-//#pragma GCC optimize("unroll-loops")
+#pragma GCC optimize("unroll-loops")
 #endif
 
 #include <bits/stdc++.h>
