@@ -1,20 +1,20 @@
 using ll = long long;
 
 struct Edge {
-    int v, u;
-    ll f, c;
-    ll w;
-    Edge* rev;
+  int v, u;
+  ll f, c;
+  ll w;
+  Edge* rev;
 
-    Edge(int v_, int u_, ll f_, ll c_, ll w_) {
-        v = v_;
-        u = u_;
-        f = f_;
-        c = c_;
-        w = w_;
+  Edge(int v_, int u_, ll f_, ll c_, ll w_) {
+    v = v_;
+    u = u_;
+    f = f_;
+    c = c_;
+    w = w_;
 
-        rev = nullptr;
-    }
+    rev = nullptr;
+  }
 };
 
 const int MAXN = 150;
@@ -26,79 +26,78 @@ vector<Edge*> edges, p(MAXN);
 vector<ll> d(MAXN);
 
 void addEdge(int v, int u, ll c = 0, ll w = 0) {
-    Edge* normal = new Edge(v, u, 0, c, w);
-    Edge* rev = new Edge(u, v, 0, 0, -w);
+  Edge* normal = new Edge(v, u, 0, c, w);
+  Edge* rev = new Edge(u, v, 0, 0, -w);
 
-    normal->rev = rev;
-    rev->rev = normal;
+  normal->rev = rev;
+  rev->rev = normal;
 
-    edges.push_back(normal);
-    edges.push_back(rev);
+  edges.push_back(normal);
+  edges.push_back(rev);
 }
 
 ll ford_bellman() {
-    d.assign(MAXN, INF);
-    p.assign(MAXN, nullptr);
-    d[s] = 0;
+  d.assign(MAXN, INF);
+  p.assign(MAXN, nullptr);
+  d[s] = 0;
 
-    ll flow = INF;
-    for (int i = 1; i < n; i++) {
-        for (auto e : edges) {
-            if (e->c > e->f && d[e->u] > d[e->v] + e->w) {
-                d[e->u] = d[e->v] + e->w;
-                p[e->u] = e;
-                flow = min(flow, e->c - e->f);
-            }
-        }
+  ll flow = INF;
+  for (int i = 1; i < n; i++) {
+    for (auto e : edges) {
+      if (e->c > e->f &&
+          d[e->u] > d[e->v] + e->w) {
+        d[e->u] = d[e->v] + e->w;
+        p[e->u] = e;
+        flow = min(flow, e->c - e->f);
+      }
     }
+  }
 
-    if (d[f] == INF) {
-        return 0;
-    }
+  if (d[f] == INF) {
+    return 0;
+  }
 
-    Edge* e = p[f];
-    while (e != nullptr) {
-        e->f += flow;
-        e->rev->f -= flow;
+  Edge* e = p[f];
+  while (e != nullptr) {
+    e->f += flow;
+    e->rev->f -= flow;
 
-        e = p[e->v];
-    }
+    e = p[e->v];
+  }
 
-    ans += flow * d[f];
-    return flow;
+  ans += flow * d[f];
+  return flow;
 }
 
 int32_t main() {
-    cin.tie(0);
-    cout.tie(0);
-    ios::sync_with_stdio(0);
+  cin.tie(0);
+  cout.tie(0);
+  ios::sync_with_stdio(0);
 
-    cin >> n >> m;
+  cin >> n >> m;
 
-    s = 0;
-    f = n - 1;
+  s = 0;
+  f = n - 1;
 
-    for (int i = 0; i < m; i++) {
-        int v, u;
-        ll c, w;
-        cin >> v >> u >> c >> w;
+  for (int i = 0; i < m; i++) {
+    int v, u;
+    ll c, w;
+    cin >> v >> u >> c >> w;
 
-        addEdge(v - 1, u - 1, c, w);
+    addEdge(v - 1, u - 1, c, w);
+  }
+
+  ll flow = 0;
+  while (true) {
+    ll new_flow = ford_bellman();
+    if (new_flow == 0) {
+      break;
     }
 
-    ll flow = 0;
-    while (true) {
-        ll new_flow = ford_bellman();
-        if (new_flow == 0) {
-            break;
-        }
+    flow += new_flow;
+  }
 
-        flow += new_flow;
-    }
-
-    cerr << flow << "\n";
-    cout << ans;
-    return 0;
+  cerr << flow << "\n";
+  cout << ans;
+  return 0;
 }
-
-

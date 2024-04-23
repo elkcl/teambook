@@ -1,7 +1,8 @@
 //
 //  Heavy-Light Decomposition
 //  Позволяет выполнять запросы на путях в дереве.
-//  Источник: https://codeforces.com/blog/entry/53170
+//  Источник:
+//  https://codeforces.com/blog/entry/53170
 //
 
 struct HLD {
@@ -10,13 +11,21 @@ struct HLD {
   vector<int> tin, siz, par, h, up;
   SegmentTree st;
   HLD(int n, const vector<vector<int>> &g)
-      : n(n), g(g), tin(n), siz(n, 1), par(n), h(n), up(n), st(n) {
+      : n(n),
+        g(g),
+        tin(n),
+        siz(n, 1),
+        par(n),
+        h(n),
+        up(n),
+        st(n) {
     par[0] = -1, h[0] = 0, up[0] = 0;
     dfs_sz(0);
     dfs_up(0);
   }
   void dfs_sz(int v) {
-    if (par[v] != -1) g[v].erase(find(all(g[v]), par[v]));
+    if (par[v] != -1)
+      g[v].erase(find(all(g[v]), par[v]));
     for (int &u : g[v]) {
       par[u] = v, h[u] = h[v] + 1;
       dfs_sz(u);
@@ -34,16 +43,20 @@ struct HLD {
       dfs_up(u);
     }
   }
-  int get_path(int v, int u) {  // запрос на пути от v до u
+  int get_path(
+      int v, int u) {  // запрос на пути от v до u
     int res = 0;
     for (; up[v] != up[u]; v = par[up[v]]) {
       if (h[up[v]] < h[up[u]]) swap(v, u);
       res += st.get(tin[up[v]], tin[v] + 1);
-      // если значения на рёбрах, прибавить к левой границе +1
+      // если значения на рёбрах, прибавить к
+      // левой границе +1
     }
     if (h[v] > h[u]) swap(v, u);
     res += st.get(tin[v], tin[u] + 1);
     return res;
   }
-  int get_subtree(int v) { return st.get(tin[v], tin[v] + siz[v]); }
+  int get_subtree(int v) {
+    return st.get(tin[v], tin[v] + siz[v]);
+  }
 };

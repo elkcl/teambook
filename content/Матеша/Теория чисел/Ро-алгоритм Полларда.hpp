@@ -22,7 +22,8 @@ int main() {
   ll C = 2 * pow(n, 1.0 / 4);
   for (int cnt = 0; cnt < 4; cnt++) {
     x[0] = abs((int)rnd()) % (n - 1) + 1;
-    for (i = 0; i < C; i++) x[i + 1] = (mul(x[i], x[i], n) + 3) % n;
+    for (i = 0; i < C; i++)
+      x[i + 1] = (mul(x[i], x[i], n) + 3) % n;
     for (int i = 0; i < C; i++) {
       ll g = gcd(abs(x[i] - x[C]), n);
       if (g != 1 && g != n) {

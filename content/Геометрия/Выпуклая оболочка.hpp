@@ -7,7 +7,9 @@ vector<V> graham(vector<V> points) {
   vector<V> hull;
   for (V p : points) {
     while (hull.size() >= 2 &&
-         ((p - hull.back()) ^ (hull[hull.size() - 2] - hull.back())) <= 0)
+           ((p - hull.back()) ^
+            (hull[hull.size() - 2] -
+             hull.back())) <= 0)
       hull.pop_back();
     hull.push_back(p);
   }

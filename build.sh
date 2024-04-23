@@ -1,1 +1,1 @@
-~/Development/notebook-generator/bin/notebookgen content --author "Moscow State University: Meanwhile, Elk, MrF \& YaV (Grigorii Bazilevich, Ilia Denisev, Vladimir Yakunin)" --initials "Moscow State University (Bazilevich, Denisev, Yakunin)" --paper a4paper --columns 3
+~/Development/notebook-generator/bin/notebookgen content --author "The Meanwhiles (Grigorii Bazilevich, Ilia Denisev, Vladimir Yakunin)" --initials "Moscow State University (Bazilevich, Denisev, Yakunin)" --paper a4paper --columns 3
